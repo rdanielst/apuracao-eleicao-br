@@ -2,6 +2,7 @@ import { GOV, fotoUrl } from '../tse/api.js';
 import Avatar from './Avatar.jsx';
 import { UF } from '../data.js';
 import { pct, pct1, int, sgn } from '../format.js';
+import Frescor from './Frescor.jsx';
 
 const COR = ['var(--g1)', 'var(--g2)'];
 
@@ -31,11 +32,13 @@ export default function GovernorView({ uf, onUf, gov, status }) {
           {gov && (
             <span className="muted" style={{ fontSize: 13 }}>
               {gov.started
-                ? pct(gov.ap) + ' das seções apuradas' + (gov.final ? ' · apuração encerrada' : ' · atualizado às ' + gov.hg)
+                ? pct(gov.ap) + ' das seções apuradas' + (gov.final ? ' · apuração encerrada' : ' · em apuração')
                 : 'Aguardando o início da apuração do 2º turno.'}
             </span>
           )}
         </div>
+
+        {gov && <div className="muted" style={{ fontSize: 12, marginTop: -12 }}><Frescor arq={gov} final={gov.final} /></div>}
 
         {!gov && <p className="muted" style={{ margin: 0 }}>{status === 'erro' ? 'Não foi possível carregar os dados do TSE. Tentando novamente…' : 'Carregando…'}</p>}
 

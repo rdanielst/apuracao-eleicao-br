@@ -147,6 +147,7 @@ export function buildModel({ dark, sel: selUf, q, dados, hist, status }) {
   return {
     t, nat, sel, rows, regions, chart, chart1, chartNote, fillByUf,
     candA: nm.A, candB: nm.B,
+    arq: { dg: r2.dg, hg: r2.hg, ts: r2.ts },
     final: r2.final, started: N2.started, hist: pontos, n1: { pA: N1.pA, pB: N1.pB },
     statusLead: r2.final ? 'Apuração concluída' : N2.started ? 'Em apuração' : 'Aguardando início',
     winSide: N2.pA >= N2.pB ? 'a' : 'b',
@@ -155,7 +156,7 @@ export function buildModel({ dark, sel: selUf, q, dados, hist, status }) {
     statusDot: dot,
     statusText: !N2.started
         ? '2º turno · ' + DATA_TURNO[2] + ' · aguardando início da apuração'
-        : '2º turno · ' + DATA_TURNO[2] + ' · ' + (r2.final ? 'apuração encerrada' : 'atualizado às ' + r2.hg),
+        : '2º turno · ' + DATA_TURNO[2] + ' · ' + (r2.final ? 'apuração encerrada' : 'em apuração'),
     modeHint: !N2.started ? 'Aguardando o início da apuração do 2º turno.' : r2.final ? 'Resultado final do 2º turno, comparado ao 1º turno.' : 'Apuração do 2º turno em andamento, comparada ao resultado final do 1º turno.',
     centerLabel: 'Seções totalizadas · 2º turno',
     mapTitle: 'Resultado por estado · 2º turno',

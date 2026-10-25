@@ -1,3 +1,5 @@
+import Frescor from './Frescor.jsx';
+
 export default function Header({ m, dark, onToggleTheme, cargo, onCargo }) {
   return (
     <>
@@ -37,7 +39,7 @@ export default function Header({ m, dark, onToggleTheme, cargo, onCargo }) {
 
           <div className="row muted" style={{ gap: 8, fontSize: 13 }}>
             <span aria-hidden="true" style={{ width: 8, height: 8, borderRadius: '50%', background: m.statusDot }} />
-            <span>{m.statusText}</span>
+            <span className="col"><span>{m.statusText}</span>{cargo === 'Presidente' && <span style={{ fontSize: 12 }}><Frescor arq={m.arq} final={m.final} /></span>}</span>
           </div>
 
           <div className="row" style={{ marginLeft: 'auto', gap: 10 }}>

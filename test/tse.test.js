@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { UF } from '../src/data.js';
-import { adaptar, adaptarGov, assinatura } from '../src/tse/adapter.js';
+import { adaptar, adaptarGov, assinatura, tsArquivo } from '../src/tse/adapter.js';
 import { registrar } from '../src/tse/historico.js';
 import { buildModel } from '../src/model.js';
 
@@ -86,4 +86,9 @@ test('governador: candidatos do 2º turno com % do 1º e sem NaN', () => {
   assert.equal(g.cands[0].nome, 'Ana Silva');
   assert.equal(g.cands[0].p1, 60);
   assert.deepEqual(semLixo(g), []);
+});
+
+test('hora do arquivo do TSE: dg/hg em Brasília viram o instante UTC certo', () => {
+  assert.equal(new Date(tsArquivo('25/10/2026', '17:06:31')).toISOString(), '2026-10-25T20:06:31.000Z');
+  assert.equal(tsArquivo('', ''), null);
 });

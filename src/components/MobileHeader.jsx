@@ -1,5 +1,6 @@
 import { Count } from './anim.jsx';
 import { pct } from '../format.js';
+import Frescor from './Frescor.jsx';
 
 const CARGOS = ['Presidente', 'Governador'];
 
@@ -48,6 +49,7 @@ export default function MobileHeader({ m, dark, onToggleTheme, cargo, onCargo })
             <span aria-hidden="true" className={m.final || !m.started ? undefined : 'ping'} style={{ width: 7, height: 7, borderRadius: '50%', background: m.final || !m.started ? m.statusDot : 'var(--live)' }} />
             <span>{m.statusLead} · <strong style={{ color: 'var(--text)' }}><Count v={m.nat.apNum} fmt={pct} /></strong> das seções</span>
           </div>
+          <div className="muted" style={{ padding: '0 16px 10px', marginTop: -4, fontSize: 11 }}><Frescor arq={m.arq} final={m.final} /></div>
           <div role="progressbar" aria-label="Seções apuradas" aria-valuemin={0} aria-valuemax={100} aria-valuenow={Math.round(m.nat.apNum)}
             style={{ position: 'absolute', left: 0, right: 0, bottom: -1, height: 3 }}>
             <div className="fill stripes" style={{ height: '100%', width: m.nat.apW, backgroundColor: 'var(--live)', borderRadius: '0 3px 3px 0', boxShadow: '0 0 8px var(--live)' }} />

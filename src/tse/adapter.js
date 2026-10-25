@@ -7,6 +7,13 @@ const n = (x) => Number.parseFloat(String(x).replace(',', '.')) || 0;
 const candidatos = (j) =>
   (j.carg?.[0]?.agr ?? []).flatMap((a) => a.par ?? []).flatMap((p) => (p.cand ?? []).map((c) => ({ ...c, sg: p.sg })));
 
+// dg/hg do JSON = quando o TSE gerou o arquivo (horário de Brasília).
+export function tsArquivo(dg, hg) {
+  const [d, m, a] = String(dg).split('/');
+  const t = Date.parse(`${a}-${m}-${d}T${hg}-03:00`);
+  return Number.isFinite(t) ? t : null;
+}
+
 // Uma abrangência (Brasil ou UF) em uma eleição.
 function rodada(j) {
   const cs = candidatos(j);
@@ -37,7 +44,7 @@ function candidato(j, num, rotulo) {
 export function adaptar(raw) {
   const { br } = raw;
   return {
-    final: br.tf === 's', idg: br.idg, dg: br.dg, hg: br.hg,
+    final: br.tf === 's', idg: br.idg, dg: br.dg, hg: br.hg, ts: tsArquivo(br.dg, br.hg),
     br: rodada(br),
     ufs: Object.fromEntries(Object.keys(UF).map((uf) => [uf, rodada(raw[uf.toLowerCase()])])),
     cands: { A: candidato(br, CAND.A, 'Candidato A'), B: candidato(br, CAND.B, 'Candidato B') }
@@ -62,7 +69,7 @@ export function adaptarGov([j1, j2]) {
       return { n: c.n, sq: c.sqcand, nome: titulo(c.nmu), sg: c.sg, v, p2, p1, d: p2 - p1 };
     });
   return {
-    final: j2.tf === 's', hg: j2.hg, started: vv2 > 0, ap: n(j2.s.pstn), vv: vv2,
+    final: j2.tf === 's', dg: j2.dg, hg: j2.hg, ts: tsArquivo(j2.dg, j2.hg), started: vv2 > 0, ap: n(j2.s.pstn), vv: vv2,
     el: n(j2.e.te), bn: n(j2.v.ptvnn), ab: n(j2.e.pan), cands
   };
 }
