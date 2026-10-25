@@ -7,6 +7,7 @@ import StatePanel from './components/StatePanel.jsx';
 import StateList from './components/StateList.jsx';
 import RegionsCard from './components/RegionsCard.jsx';
 import EvolutionChart from './components/EvolutionChart.jsx';
+import Consolidado from './components/Consolidado.jsx';
 import GovernorView from './components/GovernorView.jsx';
 import MobileApp from './components/MobileApp.jsx';
 import useIsMobile from './useIsMobile.js';
@@ -66,9 +67,12 @@ export default function App() {
                 <StateList m={m} q={q} onQ={setQ} onPick={setSelUf} />
               </aside>
             </div>
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20 }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 20, alignItems: 'flex-start' }}>
               <RegionsCard m={m} />
-              <EvolutionChart m={m} isMobile={false} />
+              <div className="col" style={{ flex: '2 1 560px', minWidth: 0, gap: 20 }}>
+                <Consolidado m={m} />
+                {m.hist.length >= 2 && <EvolutionChart m={m} isMobile={false} />}
+              </div>
             </div>
           </>
         )}

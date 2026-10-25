@@ -115,6 +115,13 @@ export function buildModel({ dark, sel: selUf, q, dados, hist, status }) {
       };
     });
 
+  // consolidado: UFs em que cada candidato lidera (maiores eleitorados primeiro)
+  const lideres = { A: [], B: [], sem: [] };
+  all.slice().sort((x, y) => y.el - x.el).forEach((d) => {
+    const x = cur(d);
+    (!x.started ? lideres.sem : x.m >= 0 ? lideres.A : lideres.B).push(d.uf);
+  });
+
   // regiões
   const regions = REGIONS.map(([id, name]) => {
     const list = all.filter((d) => d.r === id);
@@ -137,7 +144,7 @@ export function buildModel({ dark, sel: selUf, q, dados, hist, status }) {
   const chart1 = { a: X(0) + ',' + Y(N1.pA) + ' ' + X(100) + ',' + Y(N1.pA), b: X(0) + ',' + Y(N1.pB) + ' ' + X(100) + ',' + Y(N1.pB) };
   const chartNote = !N2.started
       ? 'Aguardando o início da apuração do 2º turno.'
-      : 'O TSE só publica o placar atual: o gráfico mostra o que esta sessão registrou desde ' + pct1(pontos[0].ap) + ' das seções apuradas.';
+      : 'O TSE só publica o placar atual: o gráfico mostra o que esta sessão registrou' + (pontos.length ? ' desde ' + pct1(pontos[0].ap) + ' das seções apuradas.' : '.');
 
   // mapa: cor por UF
   const fillByUf = {};
@@ -147,6 +154,7 @@ export function buildModel({ dark, sel: selUf, q, dados, hist, status }) {
   return {
     t, nat, sel, rows, regions, chart, chart1, chartNote, fillByUf,
     candA: nm.A, candB: nm.B,
+    lideres,
     arq: { dg: r2.dg, hg: r2.hg, ts: r2.ts },
     final: r2.final, started: N2.started, hist: pontos, n1: { pA: N1.pA, pB: N1.pB },
     statusLead: r2.final ? 'Apuração concluída' : N2.started ? 'Em apuração' : 'Aguardando início',

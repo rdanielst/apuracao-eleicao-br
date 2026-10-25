@@ -92,3 +92,12 @@ test('hora do arquivo do TSE: dg/hg em Brasília viram o instante UTC certo', ()
   assert.equal(new Date(tsArquivo('25/10/2026', '17:06:31')).toISOString(), '2026-10-25T20:06:31.000Z');
   assert.equal(tsArquivo('', ''), null);
 });
+
+test('consolidado: as 27 UFs ficam em exatamente um grupo', () => {
+  const m = buildModel({ dark: false, sel: 'SP', q: '', dados: { r1: turno1, r2: { ...turno1, final: false } }, hist: [], status: 'ok' });
+  const { A, B, sem } = m.lideres;
+  assert.equal(A.length + B.length + sem.length, 27);
+  assert.equal(new Set([...A, ...B, ...sem]).size, 27);
+  const zerado = buildModel({ dark: false, sel: 'SP', q: '', dados: { r1: turno1, r2: turno2zerado }, hist: [], status: 'ok' });
+  assert.equal(zerado.lideres.sem.length, 27);
+});

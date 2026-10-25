@@ -1,5 +1,6 @@
 import Avatar from './Avatar.jsx';
 import { Count } from './anim.jsx';
+import Consolidado from './Consolidado.jsx';
 import { fotoUrl, ELEICAO } from '../tse/api.js';
 import { pct, int } from '../format.js';
 
@@ -112,7 +113,9 @@ export default function MobileResumo({ m }) {
         })}
       </section>
 
-      <Evolucao m={m} />
+      <Consolidado m={m} compact />
+
+      {m.hist.length >= 2 && <Evolucao m={m} />}
 
       <p className="muted" style={{ margin: 0, fontSize: 11, textAlign: 'center', padding: '0 8px' }}>Dados do TSE, atualizados a cada 30 s. Oficial: <a href="https://resultados.tse.jus.br">TSE</a>. Mapa: svg-maps/brazil, CC BY 4.0.</p>
     </>

@@ -4,7 +4,7 @@ export default function EvolutionChart({ m, isMobile }) {
   const { t, chart, chart1, candA, candB } = m;
   const fs = isMobile ? 17 : 11;
   return (
-    <section aria-label="Evolução da apuração" className="card col" style={{ flex: '2 1 560px', minWidth: 0, padding: 22, gap: 12 }}>
+    <section aria-label="Evolução da apuração" className="card col" style={{ minWidth: 0, padding: 22, gap: 12 }}>
       <div className="wrap" style={{ justifyContent: 'space-between', gap: 10, alignItems: 'baseline' }}>
         <h2 className="h2" style={{ fontSize: 16 }}>{m.chartTitle}</h2>
         <div className="wrap" style={{ gap: 14, fontSize: 13 }}>
